@@ -55,5 +55,30 @@ class User extends Model {
 
   }
 
+  public static function listAll(){
+
+    $sql = new Sql();
+
+    return $sql->select("SELECT * FROM tb_users a INNER JOIN tb_persons b USING(idperson) ORDER BY b.desperson");
+
+  }
+
+  public static function save(){
+
+    $sql = new Sql();
+
+    $result = $sql->select("Call sp_users_save(:despeson, :deslogin, despassword, desemail, nrphone, :inadmin)", array(
+      ":desperson" => self::getdesperson(),
+      ":deslogin"=> self::getdeslogin(),
+      ":despassword" => self::getdespassword(),
+      ":desemail" => self::getdesemail(),
+      ":nrphone" => self::getnrphone(),
+      ":inadmin" => self::getinadmin()
+    ));
+
+    $this->setData($results[0]);
+
+  }
+
 }
 ?>
